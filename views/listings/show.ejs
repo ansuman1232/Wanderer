@@ -1,0 +1,37 @@
+<%- layout("layouts/boilerplate") %>
+
+<body>
+    <br><br>
+    <!-- to give an offset used this <div> -->
+<div class="row offset-2 ">
+      <h1>Listing details:</h1>
+      <!-- to structure image and text used .card class -->
+      <div class="card show-page mt-2" style="width: 40rem;">
+        <img src="<%=myDest.image%>" class="card-img-top" alt="loading image...">
+          <div class="card-body">
+           <p class="card-text">
+               <p><b><%=myDest.title%></b></p>
+              <p><b>Description : </b><%=myDest.description%></p>
+            <!--here added rupee symbol and first converted the number to string using toLocaleString() then passed "en-IN" as parameter to add comma as indian standard -->
+              </p><b>price : </b>&#8377;<%=myDest.price.toLocaleString("en-IN")%></p>
+              <p><b>location : </b><%=myDest.location%></p>
+               <p><b>country : </b><%=myDest.country%></p>    
+        
+        </p>
+        </div>
+        <!-- to arrange buttons used this div -->
+     <div class="btns" >
+        <!-- here given buttons bootstrap style -->
+            <form action="/listing/update/<%=myDest._id%>">
+                <button class="btn btn-danger">edit</button>
+            </form>
+            <form action="/listing/<%=myDest._id%>?_method=DELETE" method="post">
+                <button class="btn btn-dark">delete</button>
+            </form>
+     </div>
+
+      </div>
+</div>      
+</body>
+<br><br>
+

@@ -1,0 +1,48 @@
+<%- layout("/layouts/boilerplate.ejs") %>
+<body>
+    <h1>Create New Listing:-</h1>
+
+    <form action="/listing/add"  method="post">
+        <!-- here added the div class='row' as to align all the input elements poperly -->
+    <div class="row">
+        <!-- to give some extra space done between 2 input elemetns used :- "mb-3" -->
+        <div class="mb-3">
+            <!--adde this class:- form-label to labels and form-control to input to give bootstrap effect -->
+            <label class="from-label" for="title">Tilte:</div>
+         <input type="text" name="title" placeholder="enter title" class="form-control">
+        </div>
+
+        <div class="mb-3" >
+          <label for="description" class="form-label">descrtion:</label>
+          <textarea name="description" id=""  placeholder="add description" class="form-control"></textarea>
+        </div>
+         <!-- added this div to put 2 input elements together  -->
+        <div class="row ">
+            <!-- price will take 3 columns in md or large or xl screen else all columns and country 6 col in mid or large or xl else all columns -->
+            <div class="col-md-3 col-12">
+            <label for="price" class="form-label">price:</label>
+            <input type="number" name="price" placeholder="enter price" class="form-control">
+        </div>
+        <div class="col-md-6 col-12">
+            <label for="country" class="form-label">country:</label>
+            <input type="text" name="country" placeholder="enter country" class="form-control">
+        </div>
+       
+        </div>
+      
+        <div class="mb-3">
+            <label for="location" class="form-label">location:</label>
+           <input type="text" name="location" placeholder="enter location" class="form-control">
+    </div>
+
+       <div class="mb-3">
+        <label for="image" class="form-label">image:</label>
+        <textarea name="image" id="" rows="5" cols="40" placeholder="add image link" class="form-control"></textarea>
+    </div>
+    <button class="add-btn">add</button>
+</div>
+       
+      
+    </form>
+   
+</body>

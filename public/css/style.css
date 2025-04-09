@@ -1,0 +1,162 @@
+
+
+.plus-jakarta-sans{
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    font-optical-sizing: auto;
+    font-weight: 400 !important;
+    font-style: normal;
+  }
+
+.nav-link{
+    color:black !important;
+}
+
+.fa-compass{
+    color:rgb(203, 6, 39) !important;
+    font-size:2rem;
+}
+.navbar{
+    height:5%;
+}
+
+
+/* 
+for footer ======================*/
+
+.footer{
+ display:flex;
+ flex-wrap:wrap;
+ justify-content:center;
+ background-color:rgb(224, 216, 216);
+}
+.footer-social,.footer-name,.footer-terms{
+    width:100%;
+    background-color:rgb(224, 216, 216);
+    justify-content:center;
+    display: flex;
+    margin:1rem 1rem 1rem;
+}
+.footer-terms a{
+    text-decoration:none;
+    color:black;
+}
+.footer-terms a:hover{
+    text-decoration:underline;
+    color:black;
+}
+
+.footer-social i{
+margin-right:1rem;
+}
+
+.footer-social i:hover{
+    margin-right:1rem;
+    font-size:1.2rem;
+    }
+
+    /* for cards */
+
+    .card {  
+        /* basic layout set for cards */
+            margin:1rem 2rem 1rem;
+            padding:0px !important;
+            border:0.1rem solid grey!important;
+            border-radius:1rem  !important;
+           
+    }
+   
+    .card img{ 
+        /* to set card image */
+        height:18rem;
+        width :100%;
+        border-top-left-radius:1rem  !important;
+        border-top-right-radius:1rem  !important;
+    }
+
+    .card a{ 
+        /* removed decoration from <a> */
+        text-decoration: none;
+        color:black;
+    }
+
+    /* these effects are used to know which cards is selcted and also to dispaly the text on it */
+    .card:hover{ 
+
+        opacity:0.5;
+    }
+
+    .card-img-overlay{
+    opacity:0;
+     }
+    .card-img-overlay:hover{
+       color:black;
+        translate : 3rem 4rem;
+        font-size:2rem;
+        opacity:1;
+    }
+
+    /* for add form */
+    .add-btn{
+      background-color:rgb(203, 6, 39) ;
+      color:white;
+      border:white;
+      margin-bottom:1rem;
+    }
+
+       /* for edit form */
+       .edit-btn{
+        background-color:rgb(203, 6, 39) ;
+        color:white;
+        border:white;
+        margin-bottom:1rem;
+      }
+
+      /* show form */
+
+     div img{
+        height:20rem;
+     }
+     /* to remove the border of cards */
+     .show-page{
+        border:0px !important;
+     }
+     /* to cancel out hover effect on card */
+     .show-page:hover{
+        border:0px !important;
+        opacity:1
+     }
+
+     /* to set all buttons */
+
+     .btns{
+        display:flex;
+        justify-content:space-around;
+     }
+
+     /* for home page */
+     .home{
+        background-image: url(' https://images.unsplash.com/photo-1742845918430-c6093f93f740?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D ');
+        background-size:cover;
+        height:90vh;
+        width:180vh;
+        animation:myanim 2s ease-in 0s infinite alternate;
+     }
+
+     @keyframes myanim{
+        from{
+            opacity:0.7;
+        }
+        50%{
+            opacity:0.8;
+        }
+        100%{
+            opacity:1;
+        }
+     }
+
+     .next-btn{
+        background-color:rgb(203, 6, 39) ;
+        color:white;
+        border:white;
+        translate:50rem -5rem;
+     }

@@ -1,0 +1,33 @@
+<% layout('/layouts/boilerplate') -%>
+<body class="plus-jakarta-sans">
+    <h1>All list are:-</h1>
+
+    <!--used rows class to make gird like structure and here no need to add <div class="container"> as in boilerplatecode already there -->
+    <div class="row">
+    <!-- for each list item created a new card -->
+        <% for (list of allList){%>
+            
+             <!-- here taken the cards form bootstrap and added these classes:- col-lg-3(when large size screen then on element will take 3 col) col-md-6 col-12 -->
+             <div class="card col-lg-3 col-md-6 col-12"  style="width:18rem; ">
+                <!-- here added the link to whole image and body part of that tag to redirect us to more details ,Note:- here not use outside card or else col class wil not work -->
+                 <a href="/listing/<%=list._id%>">
+                 <img src="<%=list.image%>" class="card-img-top" alt="...">
+    <!-- this was to add text above image -->
+                 <div class="card-img-overlay">Show more</div>
+                 <div class="card-body">
+                   <p class="card-text">
+                     <b><%= list.title%></b> <br> 
+                     price: &nbsp; &#8377; <%=list.price.toLocaleString("en-IN")%> /night
+                 </p>
+                 </div>
+             </a>
+               </div>
+             
+           
+ 
+     <% } %>    
+ </div>
+
+
+    
+</body>
