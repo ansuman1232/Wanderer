@@ -21,18 +21,7 @@ app.engine('ejs', ejsMate);// use ejs-locals for all ejs templates:
 //setting to access style sheet=================
 app.use(express.static(path.join(__dirname,"/public")));
 
-//testing model===============
-// app.get("/testing",async (req,res)=>{
-// let list1=new Listing({
-//     title:'My new villa',
-//     description:"By the Beach",
-//     price:1200,
-//     location:"Puri,Odisha",
-//     country:"India"
-// });
-// await list1.save();//instead of this used this
-// res.send("done..");
-// })
+
 //starting server====================
 app.listen(8080,()=>{
     console.log('listening to port 8080');
