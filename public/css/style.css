@@ -160,3 +160,8 @@ margin-right:1rem;
         border:white;
         translate:50rem -5rem;
      }
+
+     /* for Erro.ejs  */
+     .txt{
+        translate:3rem;
+     }

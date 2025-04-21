@@ -2,47 +2,63 @@
 <body>
     <h1>Create New Listing:-</h1>
 
-    <form action="/listing/add"  method="post">
+    <form action="listing/add"  class="needs-validation"  method="post"  novalidate>
         <!-- here added the div class='row' as to align all the input elements poperly -->
     <div class="row">
         <!-- to give some extra space done between 2 input elemetns used :- "mb-3" -->
         <div class="mb-3">
             <!--adde this class:- form-label to labels and form-control to input to give bootstrap effect -->
-            <label class="from-label" for="title">Tilte:</div>
-         <input type="text" name="title" placeholder="enter title" class="form-control">
+            <label class="from-label" for="title">Title:</label>
+         <input type="text" name="listing[title]" id="title" placeholder="enter title" class="form-control" required>
+         <div class="invalid-feedback">
+            Please enter a valid title
+          </div>
         </div>
 
         <div class="mb-3" >
           <label for="description" class="form-label">descrtion:</label>
-          <textarea name="description" id=""  placeholder="add description" class="form-control"></textarea>
+          <textarea name="listing[description]" id="description"  placeholder="add description" class="form-control" required></textarea>
+          <div class="invalid-feedback">
+            Please enter a valid description
+          </div>
         </div>
          <!-- added this div to put 2 input elements together  -->
         <div class="row ">
             <!-- price will take 3 columns in md or large or xl screen else all columns and country 6 col in mid or large or xl else all columns -->
             <div class="col-md-3 col-12">
             <label for="price" class="form-label">price:</label>
-            <input type="number" name="price" placeholder="enter price" class="form-control">
+            <input type="number" name="listing[price]" id="price" placeholder="enter price" class="form-control" required>
+            <div class="invalid-feedback">
+                Please enter a valid price
+              </div>
         </div>
         <div class="col-md-6 col-12">
             <label for="country" class="form-label">country:</label>
-            <input type="text" name="country" placeholder="enter country" class="form-control">
+            <input type="text" name="listing[country]" placeholder="enter country"  id="country" class="form-control" required>
+            <div class="invalid-feedback">
+                Please enter a valid country
+              </div>
         </div>
        
         </div>
       
         <div class="mb-3">
             <label for="location" class="form-label">location:</label>
-           <input type="text" name="location" placeholder="enter location" class="form-control">
+           <input type="text" name="listing[location]" id="location"  placeholder="enter location" class="form-control" required>
+           <div class="invalid-feedback">
+            Please enter a valid location
+          </div>
     </div>
 
        <div class="mb-3">
         <label for="image" class="form-label">image:</label>
-        <textarea name="image" id="" rows="5" cols="40" placeholder="add image link" class="form-control"></textarea>
-    </div>
-    <button class="add-btn">add</button>
-</div>
+        <textarea name="listing[image]" id="image" rows="5" cols="40" placeholder="add image link" class="form-control" ></textarea>
        
+    </div>
+  
+</div>
+<button class="add-btn">add</button>
       
     </form>
-   
+   <script src="javascript/script.js"></script>
 </body>

@@ -1,0 +1,16 @@
+<!-- to show navbar and footer -->
+<%- layout('layouts/boilerplate.ejs')%>
+<body>
+    <!-- to use some custom styling -->
+    <div class="row mt-4 col-11 mb-5">
+        <!-- this is bootstrap alert -->
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <!-- here svg was not working so used frontawsome icon -->
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <!-- this is to show error message -->
+            <div class="txt">
+             &nbsp;&nbsp;&nbsp; <%=msg %>
+            </div>
+          </div>
+    </div>
+</body>

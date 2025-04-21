@@ -1,47 +1,66 @@
 <%- layout("/layouts/boilerplate.ejs") %>
 <body>
     <H1>Edit form:</H1>
-    <form action="/listing/<%=data._id%>?_method=PUT" method="post">
+    <form action="/listing/<%=data._id%>?_method=PUT" class="needs-validation" method="post" novalidate>
         <!-- here added the div class='row' as to align all the input elements poperly -->
         <div class="row">
             <!-- to give some extra space done between 2 input elemetns used :- "mb-3" -->
             <div class="mb-3" >
                 <!--adde this class:- form-label to labels and form-control to input to give bootstrap effect -->
-                <label class="from-label" for="title">Tilte:</div>
-             <input type="text" name="title" value="<%=data.title %>" class="form-control">
+                <label class="from-label" for="title">Title:</label>
+             <input type="text" name="listing[title]" id="title" value="<%=data.title %>" class="form-control" required>
+             <!-- to show invalid feedback message with text-box -->
+             <div class="invalid-feedback">
+                Please enter a valid title
+              </div>
             </div>
     
             <div class="mb-3" >
               <label for="description" class="form-label">descrtion:</label>
-              <textarea name="description" id=""   class="form-control"><%=data.description%></textarea>
+              <textarea name="listing[description]" id="description"   class="form-control" required><%=data.description%></textarea>
+              <div class="invalid-feedback">
+                Please enter a valid descrption
+              </div>
             </div>
              <!-- added this div to put 2 input elements together  -->
             <div class="row ">
                 <!-- price will take 3 columns in md or large or xl screen else all columns and country 6 col in mid or large or xl else all columns -->
                 <div class="col-md-3 col-12">
                 <label for="price" class="form-label">price:</label>
-                <input type="number" name="price" value="<%=data.price%>" class="form-control">
+                <input type="number" name="listing[price]" id="price"value="<%=data.price%>" class="form-control" required>
+                <div class="invalid-feedback">
+                    Please enter a valid price
+                  </div>
             </div>
             <div class="col-md-6 col-12">
                 <label for="country" class="form-label">country:</label>
-                <input type="text" name="country" placeholder="<%=data.country%>" class="form-control">
+                <input type="text" name="listing[country]" id="country" value="<%=data.country%>" class="form-control" required>
+                <div class="invalid-feedback">
+                    Please enter a valid country name
+                  </div>
             </div>
            
             </div>
           
             <div class="mb-3">
                 <label for="location" class="form-label">location:</label>
-               <input type="text" name="location" placeholder="<%=data.location%>" class="form-control">
+               <input type="text" name="listing[location]" id="location" value="<%=data.location%>" class="form-control" required>
+               <div class="invalid-feedback">
+                Please enter a valid location
+              </div>
         </div>
     
            <div class="mb-3">
             <label for="image" class="form-label">image:</label>
-            <textarea name="image" id="" rows="5" cols="40"  class="form-control"><%=data.image%></textarea>
+            <textarea name="listing[image]" id="image" rows="5" cols="40"  class="form-control" required><%=data.image%></textarea>
+            <div class="invalid-feedback">
+                Please enter a valid image link
+              </div>
         </div>
-        <button class="edit-btn">edit</button>
+     
     </div>
-           
+    <button class="edit-btn">edit</button>
       
     </form><br><br>
-
+<script src="/javascript/script.js"></script>
 </body>
