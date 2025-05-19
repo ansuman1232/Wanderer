@@ -28,14 +28,12 @@ const {schemaJoi}=require('./validSchemaJoi.js');//requiring
 validateSchema=function(req,res,next){//middleware to check
         //if errror any filed or whole listing body is missing then throw error
 let {error}= schemaJoi.validate(req.body);//here first extracted the error from the req body
-let errMsg=error.details.map((el)=>el.message).join(",");//here collected all the details of error obj made a new array 
-//and the join it using ","
+
 if(error){//if  contains an error 
     throw new MyError(400,errMsg);//thrown the errror with  that error
 }
-else{
+
     next();
-}
 }
 
 //starting server====================
@@ -73,8 +71,8 @@ app.post("/listing/add",validateSchema, wrapAsync(async (req,res,next)=>{//savin
 let{country:newCountry  ,title:newTitle, location:newLocation, price:np, description:nd,image:img}=req.body.listing;//here deconstructing from 
 //listing body
 let list1=  new Listing({title:newTitle,location:newLocation,price:np,description:nd,country:newCountry,image:img})
-list1.save().then(res.redirect('/listing'))
-
+let relt= await list1.save()//.then(res.redirect('/listing'))
+res.redirect('/listing',)
 }));
 
 
@@ -85,6 +83,7 @@ app.get("/listing/update/:id",wrapAsync(async (req,res,next)=>{
     const data = await Listing.findById(id);
 
     res.render("./listings/edit.ejs",{data});
+   
 }))
 
 var methodOverride = require('method-override');
@@ -102,7 +101,7 @@ if(!req.body.listing.image){
 }
     let{country:newCountry  ,title:newTitle, location:newLocation, price:np, description:nd,image:img}=req.body.listing;
      await Listing.findByIdAndUpdate(id,{title:newTitle,location:newLocation,price:np,description:nd,country:newCountry,image:img});
-
+   
     res.redirect(`/listing/${id}`);
 
 }));
@@ -124,7 +123,11 @@ app.all(/.*/, (req, res, next) => {
 app.use((err,req,res,next)=>{
 
 let {statusCode=500,message="some Error occured"}=err;
+
 console.log(statusCode,message);
 
 res.render('./listings/Error.ejs',{msg:message});
 });
+
+
+
