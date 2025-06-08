@@ -41,7 +41,19 @@
         <h3>Review:</h3><br>
         <form action="/review/<%=myDest._id%>" method="post" novalidate  class="needs-validation">
           <label for="ratings" class="form-label">Ratings:</label>
-          <input type="range" min="1" max="5" step="1" value="3" id="ratings" name="review[ratings]" class="form-control" required><br>
+           <fieldset class="starability-coinFlip">
+  <!-- <input type="radio" id="no-rate" class="input-no-rate" name="review[ratings]" value="1" />  -->
+  <input type="radio" id="first-rate1" name="review[ratings]" value="1" checked /><!--here set default value as 1 "chekced attribute"-->
+  <label for="first-rate1" title="Terrible" class="form-label">1 star</label>
+  <input type="radio" id="first-rate2" name="review[ratings]" value="2" />
+  <label for="first-rate2" title="Not good">2 stars</label>
+  <input type="radio" id="first-rate3" name="review[ratings]" value="3" />
+  <label for="first-rate3" title="Average">3 stars</label>
+  <input type="radio" id="first-rate4" name="review[ratings]" value="4" />
+  <label for="first-rate4" title="Very good">4 stars</label>
+  <input type="radio" id="first-rate5" name="review[ratings]" value="5" />
+  <label for="first-rate5" title="Amazing">5 stars</label>
+</fieldset>
            <label for="comment" class="form-label" >Comment:</label><br>
            <textarea name="review[comment]" class="form-control" id="comment" placeholder="Enter your comment" rows="5" cols="60" required></textarea><br>
            <div class="invalid-feedback">Please enter some comments</div>
@@ -58,8 +70,9 @@
          <div class="card col-5 mr-2 mb-3 shadow">
          <div class="card-body">
          <h5 class="card-title"><%=myDest.reviews[r].author.username%></h5>   <!--this is user name-->
+              <p class="starability-result card-text" data-rating="<%= myDest.reviews[r].ratings  %>"> </p>
          <p class="card-text"> <%= myDest.reviews[r].comment %></p>  <!--this is comment-->
-         <p class="card-text"><%=myDest.reviews[r].ratings  %> stars </p>  
+      
          <form action="/review/<%=myDest._id%>/<%=myDest.reviews[r]._id%>?_method=DELETE"   method="post"><!--delete button-->
           <button class="btn btn-dark">Delete</button>
          </form> 

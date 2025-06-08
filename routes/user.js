@@ -51,3 +51,19 @@ router.post("/login",saveUserUrl,//to save user url
 router.get("/logout",wrapAsync(userController.logout));
 
 module.exports=router;
+
+//===========another way to write login and signIn route===========
+
+// router.route("/sigup")
+// .get(wrapAsync(userController.showSignUpForm))
+// .post(wrapAsync(userController.singUp))
+
+
+// router.route("/login")
+// .get(wrapAsync(userController.logInForm))
+// .post(saveUserUrl,//to save user url
+//    passport.authenticate("local",{failureRedirect:"/user/login",//directing to login here
+//     //passport.authenticate() middleware if error then redirect to login page with a flash message
+//     //else go to callback
+//     failureFlash:true}) 
+// ,wrapAsync(userController.postLogin))
