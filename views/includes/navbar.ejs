@@ -8,9 +8,17 @@
         <div class="navbar-nav">
           <a class="nav-link active" aria-current="page" href="/home">Home</a>
           <a class="nav-link" href="/listing">allListing</a>
-          <a class="nav-link" href="/listingnewform">Add new List</a>
-        
+          <a class="nav-link" href="/listing/newform">Add new List</a>
         </div>
+      </div>
+      <div class="navbar-nav">
+        <% if(currUser){%>
+           <a class="nav-link" href="../user/logout">logout</a>
+            <%}%>
+          <% if(!currUser){%>
+         <a class="nav-link "  href="../user/login">login</a>
+          <a class="nav-link" href="../user/signup">signup</a>
+       <%}%>
       </div>
     </div>
   </nav>

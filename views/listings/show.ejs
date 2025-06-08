@@ -3,14 +3,16 @@
 <body>
     <br><br>
     <!-- to give an offset used this <div> -->
-<div class="row offset-2 ">
+<div class="row  ">
       <h1>Listing details:</h1>
       <!-- to structure image and text used .card class -->
-      <div class="card show-page mt-2" style="width: 40rem;">
+      <div class="card show-page mt-2" >
         <img src="<%=myDest.image%>" class="card-img-top" alt="loading image...">
           <div class="card-body">
            <p class="card-text">
-               <p><b><%=myDest.title%></b></p>
+            
+               <p><h4><b><%=myDest.title%></b></h4></p>
+               <p><b>Owned By: </b><i><%= myDest.owner.username%></i></p>
               <p><b>Description : </b><%=myDest.description%></p>
             <!--here added rupee symbol and first converted the number to string using toLocaleString() then passed "en-IN" as parameter to add comma as indian standard -->
               </p><b>price : </b>&#8377;<%=myDest.price.toLocaleString("en-IN")%></p>
@@ -20,6 +22,7 @@
         </p>
         </div>
         <!-- to arrange buttons used this div -->
+         <% if(currUser && currUser._id.equals(myDest.owner._id)){%>
      <div class="btns" >
         <!-- here given buttons bootstrap style -->
             <form action="/listing/update/<%=myDest._id%>">
@@ -29,8 +32,43 @@
                 <button class="btn btn-dark">delete</button>
             </form>
      </div>
-
+           <% }%>
       </div>
+       <% if(currUser){%>
+      <div class="Rform">
+        <hr>
+       
+        <h3>Review:</h3><br>
+        <form action="/review/<%=myDest._id%>" method="post" novalidate  class="needs-validation">
+          <label for="ratings" class="form-label">Ratings:</label>
+          <input type="range" min="1" max="5" step="1" value="3" id="ratings" name="review[ratings]" class="form-control" required><br>
+           <label for="comment" class="form-label" >Comment:</label><br>
+           <textarea name="review[comment]" class="form-control" id="comment" placeholder="Enter your comment" rows="5" cols="60" required></textarea><br>
+           <div class="invalid-feedback">Please enter some comments</div>
+           <button type="submit" class="btn btn-outline-primary">Submit</button>
+        </form>
+        <br>
+      </div>
+      <% }%>
+       <div class="row allReviews"> <!--to give grid like structure-->
+        <hr>
+        <h3>All Reviews:</h3>
+        
+         <% for(r in myDest.reviews) {%>                                 <!--here r is index of array this will help to show reviews in the form of list -->
+         <div class="card col-5 mr-2 mb-3 shadow">
+         <div class="card-body">
+         <h5 class="card-title"><%=myDest.reviews[r].author.username%></h5>   <!--this is user name-->
+         <p class="card-text"> <%= myDest.reviews[r].comment %></p>  <!--this is comment-->
+         <p class="card-text"><%=myDest.reviews[r].ratings  %> stars </p>  
+         <form action="/review/<%=myDest._id%>/<%=myDest.reviews[r]._id%>?_method=DELETE"   method="post"><!--delete button-->
+          <button class="btn btn-dark">Delete</button>
+         </form> 
+      </div>
+    </div>
+      
+       <%}%>
+      </div>
+    
 </div>      
 </body>
 <br><br>

@@ -13,8 +13,8 @@ async function main(){
 }
 main().then(()=>{console.log("connecting to db")})
 .catch(er=>{console.log(e);});
-//requring export package==============
-const Listing=require('./models/listing.js');
+
+
 //to set ejs-mate=================
 let ejsMate = require('ejs-mate');
 app.engine('ejs', ejsMate);// use ejs-locals for all ejs templates:
@@ -22,95 +22,100 @@ app.engine('ejs', ejsMate);// use ejs-locals for all ejs templates:
 app.use(express.static(path.join(__dirname,"/public")));
 //requiring my error class==========================
 const MyError=require("./utils/myError.js");
-//for schema validation and throwing error======
-const {schemaJoi}=require('./validSchemaJoi.js');//requiring
 
-validateSchema=function(req,res,next){//middleware to check
-        //if errror any filed or whole listing body is missing then throw error
-let {error}= schemaJoi.validate(req.body);//here first extracted the error from the req body
 
-if(error){//if  contains an error 
-    throw new MyError(400,errMsg);//thrown the errror with  that error
-}
 
-    next();
-}
+
+
+
+
+
+
 
 //starting server====================
 app.listen(8080,()=>{
     console.log('listening to port 8080');
 })
-app.get("/home",(req,res)=>{
-    res.render("./listings/home.ejs")
-})
+
 //to read the body of url==========
 app.use(express.urlencoded({extended : true}))
 app.use(express.json())
 
-//creating an idex route to show all location title ==============
-app.get("/listing",async (req,res)=>{
-const allList= await Listing.find();
-res.render("./listings/list.ejs",{allList});
-});
-//to show detalis of an particular topic=============
-app.get("/listing/:id",(req,res,next)=>{
-let {id}=req.params;
-
-Listing.findById(id).then(data=>{res.render("./listings/show.ejs",{myDest:data})}).catch(err=>next(err));
-});
-//=====================create route===================
-const wrapAsync=require('./utils/wrapAsync.js');
-//===================requiing ayncfunction==========
-
-app.get("/listingnewform",(req,res)=>{ //direct to new location add===
-    res.render("./listings/add.ejs");
-});
-
-app.post("/listing/add",validateSchema, wrapAsync(async (req,res,next)=>{//saving to database========
- 
-let{country:newCountry  ,title:newTitle, location:newLocation, price:np, description:nd,image:img}=req.body.listing;//here deconstructing from 
-//listing body
-let list1=  new Listing({title:newTitle,location:newLocation,price:np,description:nd,country:newCountry,image:img})
-let relt= await list1.save()//.then(res.redirect('/listing'))
-res.redirect('/listing',)
-}));
 
 
-//=============update route===================
-app.get("/listing/update/:id",wrapAsync(async (req,res,next)=>{
-    let {id}=req.params;
-
-    const data = await Listing.findById(id);
-
-    res.render("./listings/edit.ejs",{data});
-   
-}))
-
-var methodOverride = require('method-override');
-
-app.use(methodOverride('_method'))
-//==========to update in database=========
-app.put("/listing/:id",validateSchema,wrapAsync(async (req,res,next)=>{
 
 
-    let {id}=req.params;
 
+//=======require express-session and middleware==============
 
-if(!req.body.listing.image){
-    throw new MyError(400,"Image not found");
+const session=require("express-session")
+const sessionOption={//setting session options
+    secret:"MySecret",
+    resave:"false",
+    saveUninitialized:"true",
+    cookies:{
+     expires: Date.now() +7*24*60*60*1000,// this will ensure that cookie will be delete from browser 
+     //after 7 days , if no value is set then it will be deleted just after browser is closed.
+     maxAge: 7*24*60*60*1000,//set the max age also with expire date
+     httpOnly:true,//to protect form cross scripting attack(not explained in detail)
+    }
 }
-    let{country:newCountry  ,title:newTitle, location:newLocation, price:np, description:nd,image:img}=req.body.listing;
-     await Listing.findByIdAndUpdate(id,{title:newTitle,location:newLocation,price:np,description:nd,country:newCountry,image:img});
-   
-    res.redirect(`/listing/${id}`);
+app.use(session(sessionOption));
+// for passport===============
+const User=require("./models/user.js")
+const LocalStrategy= require("passport-local")
+const passport=require("passport")
 
-}));
-//=============delete route=======================
-app.delete("/listing/:id",wrapAsync(async(req,res,next)=>{
-    let {id}=req.params;
-    await Listing.findByIdAndDelete(id);
-    res.redirect("/listing");
-}));
+//for passport authentication===================================
+app.use(passport.initialize())//when ever request comes to any route it must initialize the passport.
+app.use(passport.session())//this help  a web app to identify that same user is
+ //sending the request to another page or different user.
+//===================for flash and showing login and sign and logout options====================
+
+const flash=require("connect-flash")
+app.use(flash())//do these all thing before requiring any route
+app.use((req,res,next)=>{//do these all thing before requiring any route
+    res.locals.success=req.flash("success");
+    res.locals.error=req.flash("error");
+  
+    res.locals.currUser=req.user;//note keep this after passport only .
+ 
+    next()
+})
+
+//========Demo User=========================================
+// app.get("/demouser",async (req,res)=>{
+//     let fakeUser={
+//         email:"user1@gmail.com",
+//         username:"Raj1"//here due to "passport-local-mongoose" we can add this and here username will be unique
+//     }
+//     let data=await User.register(fakeUser,"wowGreat");//this function parameter (username ,email,password) ,here password is "wowGreat"
+//     res.send(data)
+// })
+
+//home route===================
+app.get("/home",(req,res,next)=>{//note:- define it after implementing session and flash
+    // console.log(currUser)
+    res.render("./listings/home.ejs",{currUser:req.user})
+    
+})
+
+
+//requiring the routes==================
+const userRoutes=require("./routes/user.js")
+app.use('/user',userRoutes)
+
+const listingRoutes=require("./routes/listing.js");
+app.use('/listing',listingRoutes)
+const reviewRoutes=require('./routes/review.js')
+app.use('/review',reviewRoutes)
+
+
+
+
+
+
+
 
 //==============if any randonm request is send on a route not mentioned=======
 
@@ -118,6 +123,7 @@ app.delete("/listing/:id",wrapAsync(async(req,res,next)=>{
 app.all(/.*/, (req, res, next) => {
     next(new MyError(404,"Page Not Found"));
   });
+
 
 //========error handeling middleware===================
 app.use((err,req,res,next)=>{
@@ -129,5 +135,10 @@ console.log(statusCode,message);
 res.render('./listings/Error.ejs',{msg:message});
 });
 
+
+// login usersname,password:-
+// user6,password :12345
+// user5,password :1234
+// raja mohan12,raja mohan12
 
 

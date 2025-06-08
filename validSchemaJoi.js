@@ -15,3 +15,10 @@ module.exports.schemaJoi= joi.object({//joi will recieve an object
         image:joi.string().allow("",null)//here our image can be null or empty string
     }).required(),
 });
+
+module.exports.reviewSchemaJoi=joi.object({//for review schema
+review:joi.object({
+    ratings:joi.number().required().min(1).max(5),
+    comment:joi.string().required()
+}).required()
+});
